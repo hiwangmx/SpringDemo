@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.star.aop.user.bean.Person;
+import com.star.aop.user.factory.PersonProxyFactory;
+import com.star.aop.user.service.UserService;
+import com.star.aop.user.serviceImp.UserServiceImp;
+
 /**
  * 
  * 
@@ -13,7 +18,7 @@ import java.util.List;
 
 hibernate的几种状态
 	瞬时状态:是指对象被new之后尚未保存到数据库,一旦服务器停止,JVM会回收它所占的内存资源,此时对象没有与session关联.
-	托管状态：在数据库中已有数据与之对应，且与session相关联。实体状态转换到托管状态的方法。
+	持久状态：在数据库中已有数据与之对应，且与session相关联。实体状态转换到托管状态的方法。
 		A.调用persist(),实体从游离转变到托管,最后变成持久化状态.
 		B.调用find()或Query执行查询,实体从持久变成托管.
 		C.调用refresh(),游离实体将被重新加载,变成托管状态.
@@ -25,7 +30,6 @@ hibernate的几种状态
 		C.调用clear方法时,所有的实体将强制转化为游离态
 
 列出123456的所有排列组合
-
 
 session和cookie的区别
 
@@ -46,10 +50,12 @@ public class PersonAopTest {
 
 	
 	public static void main(String[] args) {
-		//PersonProxyFactory personProxyFactory = new PersonProxyFactory();
-		//UserServiceImp userService = (UserServiceImp) personProxyFactory.createProxyInstance(new UserServiceImp());
-		//userService.save(new Person());
-		System.out.println(2 << 3);
+		PersonProxyFactory personProxyFactory = new PersonProxyFactory();
+		UserService userService = (UserService) personProxyFactory.createProxyInstance(new UserServiceImp());
+		userService.save(new Person());
+		
+		
+	/*	System.out.println(2 << 3);
 		
 		String str= "123456";
 		List<String> arrayList = permute(str.toCharArray(),0);
@@ -57,7 +63,7 @@ public class PersonAopTest {
 		for(String strss : arrayList){
 			System.out.println(strss);
 		}
-		
+	*/
 		
 	}
 	
